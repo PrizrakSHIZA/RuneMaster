@@ -77,7 +77,7 @@ public class DebugController : MonoBehaviour
             SPAWN_ENEMY,
             START_TURN,
             END_TURN,
-            CLEAR,
+            //CLEAR,
         };
     }
 

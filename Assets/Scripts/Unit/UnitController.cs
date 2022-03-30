@@ -39,16 +39,15 @@ public class UnitController : MonoBehaviour
                 if (unit.IsAlly(this))
                 {
                     int moveTo = unit.currentSquare - 1 * owner;
-                    PerformMove(moveTo, true);
+                    PerformMove(moveTo);
                     return;
                 }
                 else
                 {
                     int moveTo = unit.currentSquare - 1 * owner;
-                    PerformMove(moveTo);
+                    PerformMove(moveTo, true);
                     return;
                 }
-
             }
         }
 
@@ -72,14 +71,15 @@ public class UnitController : MonoBehaviour
         }
 
         int diff = Mathf.Abs(currentSquare - moveTo);
+        currentSquare = moveTo;
+        Gameplay.Singleton.squares[currentSquare].unitOn = this;
+
         GetComponent<RectTransform>().DOAnchorPos(Gameplay.Singleton.squares[moveTo].anchoredPosition, diff * _TimeToMove)
             .OnComplete(() => 
             {
                 if (attack)
                     Attack(); //do nothing
             });
-        currentSquare = moveTo;
-        Gameplay.Singleton.squares[currentSquare].unitOn = this;
     }
 
     public void Attack()
