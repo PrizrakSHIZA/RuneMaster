@@ -23,57 +23,35 @@ public class UnitController : MonoBehaviour
 
     public void Move()
     {
-        //change owbner modifier which will be used in bext formulas
+        //change owner modifier which will be used in bext formulas
         int owner = -1;
         if (playerControl)
             owner = 1;
 
-        //Define enemies and allies
-        List<UnitController> allies = new List<UnitController>();
-        List<UnitController> enemies = new List<UnitController>();
 
-        if (owner == -1)
+        //Check for unit on the way
+        for (int i = 1; i <= stats.speed; i++)
         {
-            allies = Gameplay.Singleton.enemyUnits;
-            enemies = Gameplay.Singleton.playerUnits;
-        }
-        else if (owner == 1)
-        { 
-            allies = Gameplay.Singleton.playerUnits;
-            enemies = Gameplay.Singleton.enemyUnits;
-        }
-
-
-        //Check for ally on the way
-        foreach (UnitController unit in allies)
-        {
-            for (int i = 1; i <= stats.speed; i++)
+            UnitController unit = Gameplay.Singleton.squares[currentSquare + i * owner].unitOn;
+            if (unit != null)
             {
-                if (unit.currentSquare == currentSquare + i)
+                //check if ally
+                if (unit.IsAlly(this))
+                {
+                    int moveTo = unit.currentSquare - 1 * owner;
+                    PerformMove(moveTo, true);
+                    return;
+                }
+                else
                 {
                     int moveTo = unit.currentSquare - 1 * owner;
                     PerformMove(moveTo);
                     return;
                 }
+
             }
         }
 
-        //Check the enemy on the way
-        foreach (UnitController enemy in enemies)
-        {
-            if (enemy && (currentSquare + (stats.speed * owner)) * owner >= enemy.currentSquare * owner)
-            {
-                int moveTo = enemy.currentSquare - 1 * owner;
-                PerformMove(moveTo, true);
-                return;
-            }
-            else
-            {
-                int moveTo = currentSquare + stats.speed * owner;
-                PerformMove(moveTo, false);
-                return;
-            }
-        }
         //If noone on the way
         int to = currentSquare + stats.speed * owner;
         PerformMove(to, false);
@@ -150,7 +128,15 @@ public class UnitController : MonoBehaviour
             }
         });
    }
-    
+
+    public bool IsAlly(UnitController unit)
+    {
+        if (unit.playerControl && playerControl || !unit.playerControl && !playerControl) 
+            return true;
+        else 
+            return false;
+    }
+
     public void GetDamageModifier()
     {
 

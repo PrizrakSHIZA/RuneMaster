@@ -13,6 +13,7 @@ public class DebugController : MonoBehaviour
     public static DebugCommand HELP;
     public static DebugCommand START_TURN;
     public static DebugCommand END_TURN;
+    public static DebugCommand CLEAR;
     public static DebugCommand<int> SPAWN_ALLY;
     public static DebugCommand<int> SPAWN_ENEMY;
 
@@ -39,17 +40,34 @@ public class DebugController : MonoBehaviour
             Gameplay.Singleton.EndTurn();
         });
 
-        SPAWN_ALLY = new DebugCommand<int>("spawnally", "spawns an ally", "spawnally <speed>", (x) => 
+        CLEAR = new DebugCommand("clear", "clears field from units", "clear", () =>
+        {
+            Gameplay.Singleton.playerUnits.Clear();
+            Gameplay.Singleton.enemyUnits.Clear();
+
+            for (int i = 0; i < Gameplay.Singleton.squares.Count; i++)
+            {
+                Gameplay.Singleton.squares[i].unitOn = null;
+            }
+
+            foreach (GameObject child in Gameplay.Singleton.field)
+            {
+                Destroy(child.gameObject);
+            }
+        });
+
+        SPAWN_ALLY = new DebugCommand<int>("ally", "spawns an ally", "spawnally <speed>", (x) => 
         {
             Unit unit = new Unit(speed: x);
             PlayerController.Singleton.Summon(unit);
         });
 
-        SPAWN_ENEMY = new DebugCommand<int>("spawnenemy", "spawns an enemy", "spawnenemy <speed>", (x) =>
+        SPAWN_ENEMY = new DebugCommand<int>("enemy", "spawns an enemy", "spawnenemy <speed>", (x) =>
         {
             Unit unit = new Unit(speed: x);
             PlayerController.Singleton.SummonEnemy(unit);
         });
+
 
         //add all commands to list
         commandList = new List<object>
@@ -59,6 +77,7 @@ public class DebugController : MonoBehaviour
             SPAWN_ENEMY,
             START_TURN,
             END_TURN,
+            CLEAR,
         };
     }
 
