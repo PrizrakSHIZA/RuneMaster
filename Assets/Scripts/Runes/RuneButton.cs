@@ -17,7 +17,7 @@ public class RuneButton : MonoBehaviour
     {
         if (inBook)
         {
-            if (PlayerController.Singleton.currentSpell.Count <= 3)
+            if (PlayerController.Singleton.currentSpell.Count < 3)
             { 
                 PlayerController.Singleton.currentSpell.Add(rune);
                 RuneBook.Singleton.PlaceRune(rune);

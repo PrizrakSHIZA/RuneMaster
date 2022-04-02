@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour
     public List<Runes> currentSpell = new List<Runes>();
 
     public PlayerData data;
-
-    [SerializeField] GameObject prefab;
     
     int mana;
     int hp;
@@ -35,55 +33,20 @@ public class PlayerController : MonoBehaviour
         {
             if (currentSpell.SequenceEqual(spell.spellRunes))
             {
-                spell.Cast.Invoke();
+                if (spell is SpellSummon)
+                    (spell as SpellSummon).Cast(this);
+                else if (spell is SpellTarget)
+                {
+                    throw new KeyNotFoundException();
+
+                    int target = 0;
+                    //Choose target, then
+                    (spell as SpellTarget).Cast(this, target);
+                }
                 return;
             }
         }
         Debug.Log("No such spell");
-    }
-
-    public void Summon()
-    {
-        Unit unit = new Unit(speed: 2);
-        var temp = Instantiate(prefab, Gameplay.Singleton.field);
-        temp.GetComponent<RectTransform>().anchoredPosition = Gameplay.Singleton.squares[0].anchoredPosition;
-        var unitControler = temp.GetComponent<UnitController>();
-
-        unitControler.stats = unit;
-        unitControler.currentSquare = 0;
-        unitControler.playerControl = true;
-        Gameplay.Singleton.playerUnits.Add(unitControler);
-        Gameplay.Singleton.squares[unitControler.currentSquare].unitOn = unitControler;
-    }
-
-    public void Summon(Unit unit)
-    {
-        var temp = Instantiate(prefab, Gameplay.Singleton.field);
-        temp.GetComponent<RectTransform>().anchoredPosition = Gameplay.Singleton.squares[0].anchoredPosition;
-        var unitControler = temp.GetComponent<UnitController>();
-
-        unitControler.stats = unit;
-        unitControler.currentSquare = 0;
-        unitControler.playerControl = true;
-        Gameplay.Singleton.playerUnits.Add(unitControler);
-        Gameplay.Singleton.squares[unitControler.currentSquare].unitOn = unitControler;
-    }
-
-    public void SummonEnemy(Unit unit)
-    {
-        var temp = Instantiate(prefab, Gameplay.Singleton.field);
-        temp.GetComponent<RectTransform>().anchoredPosition = Gameplay.Singleton.squares[Gameplay.Singleton.squares.Count-1].anchoredPosition;
-        var unitControler = temp.GetComponent<UnitController>();
-
-        //only for debug
-        temp.GetComponent<Image>().color = Color.red;
-        //end
-        
-        unitControler.stats = unit;
-        unitControler.currentSquare = Gameplay.Singleton.squares.Count-1;
-        unitControler.playerControl = false;
-        Gameplay.Singleton.enemyUnits.Add(unitControler);
-        Gameplay.Singleton.squares[unitControler.currentSquare].unitOn = unitControler;
     }
 
     public void TakeDamage(int damage)

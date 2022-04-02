@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DebugController : MonoBehaviour
 {
+    [SerializeField] GameObject prefab;
+
     bool showConsole;
     bool showHelp;
 
@@ -59,13 +61,13 @@ public class DebugController : MonoBehaviour
         SPAWN_ALLY = new DebugCommand<int>("ally", "spawns an ally", "spawnally <speed>", (x) => 
         {
             Unit unit = new Unit(speed: x);
-            PlayerController.Singleton.Summon(unit);
+            Summon(unit);
         });
 
         SPAWN_ENEMY = new DebugCommand<int>("enemy", "spawns an enemy", "spawnenemy <speed>", (x) =>
         {
             Unit unit = new Unit(speed: x);
-            PlayerController.Singleton.SummonEnemy(unit);
+            SummonEnemy(unit);
         });
 
 
@@ -165,4 +167,31 @@ public class DebugController : MonoBehaviour
         }
         catch (Exception e) { }
     }
+
+    public void Summon(Unit unit)
+    {
+        var temp = Instantiate(prefab, Gameplay.Singleton.field);
+        temp.GetComponent<RectTransform>().anchoredPosition = Gameplay.Singleton.squares[0].anchoredPosition;
+        var unitControler = temp.GetComponent<UnitController>();
+
+        unitControler.stats = unit;
+        unitControler.currentSquare = 0;
+        unitControler.playerControl = true;
+        Gameplay.Singleton.playerUnits.Add(unitControler);
+        Gameplay.Singleton.squares[unitControler.currentSquare].unitOn = unitControler;
+    }
+
+    public void SummonEnemy(Unit unit)
+    {
+        var temp = Instantiate(prefab, Gameplay.Singleton.field);
+        temp.GetComponent<RectTransform>().anchoredPosition = Gameplay.Singleton.squares[Gameplay.Singleton.squares.Count - 1].anchoredPosition;
+        var unitControler = temp.GetComponent<UnitController>();
+
+        unitControler.stats = unit;
+        unitControler.currentSquare = Gameplay.Singleton.squares.Count - 1;
+        unitControler.playerControl = false;
+        Gameplay.Singleton.enemyUnits.Add(unitControler);
+        Gameplay.Singleton.squares[unitControler.currentSquare].unitOn = unitControler;
+    }
+
 }

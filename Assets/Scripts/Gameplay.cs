@@ -29,6 +29,7 @@ public class Gameplay : MonoBehaviour
         }*/
         playerTurn = false;
         MoveUnits(enemyUnits);
+        AIController.Singleton.ChooseAction();
     }
 
     public void StartTurn()
