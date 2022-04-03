@@ -16,20 +16,23 @@ public class Spell
             spellRunes.Add(rune3);
     }
 
-    public static List<Spell> Spells = new List<Spell>()
+    public static Dictionary<Spells, Spell> Spells = new Dictionary<Spells, Spell>()
     {
-        new SpellSummon(Runes.test1, Runes.test2, Cast: (object sender) => 
+        { global::Spells.S_Soldier, new SpellSummon(Runes.test1, Runes.test2, Cast: (object sender) => {
+
+        })},
+
+        { global::Spells.S_BigSoldier, new SpellSummon(Runes.test1, Runes.test2, Runes.test3, (object sender) =>
         {
-            if(sender is AIController)
-            {
-                Debug.Log("Spell1");
-            }
-        }),
-        new SpellSummon(Runes.test1, Runes.test2, Runes.test3, (object sender) => 
-        { 
-            Debug.Log("Spell2"); 
-        }),
+            Debug.Log("Spell2");
+        })},
     };
+}
+
+public enum Spells
+{ 
+    S_Soldier,
+    S_BigSoldier,
 }
 
 public class SpellSummon : Spell

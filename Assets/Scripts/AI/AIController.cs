@@ -6,28 +6,26 @@ public class AIController : MonoBehaviour
 {
     public static AIController Singleton;
 
-    public List<Spell> spellList;
+    public AI_SO AI;
 
-    [Range(0,10)]
-    public int smartChance;
-
-    int maxHP;
-    int hp;
+    public int hp;
 
     private void Start()
     {
-        Singleton = this;   
+        Singleton = this;
+        hp = AI.HP;
     }
 
     public void ChooseAction()
     {
-        if (Random.Range(1, 11) <= smartChance)
+        if (Random.Range(1, 11) <= AI.smartChance)
         {
             throw new KeyNotFoundException();
         }
         else
         {
-            Spell spell = spellList[Random.Range(0, spellList.Count)];
+            Spell spell; 
+            Spell.Spells.TryGetValue(AI.spellList[Random.Range(0, AI.spellList.Count)], out spell);
             if (spell is SpellSummon)
             {
                 (spell as SpellSummon).Cast(this);

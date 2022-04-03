@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     public void Cast()
     {
-        foreach (Spell spell in Spell.Spells)
+        foreach (Spell spell in Spell.Spells.Values)
         {
             if (currentSpell.SequenceEqual(spell.spellRunes))
             {

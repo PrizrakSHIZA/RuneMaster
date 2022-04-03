@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gameplay : MonoBehaviour
 {
     public static Gameplay Singleton;
+
+    [SerializeField] Button endTurn;
 
     public Transform field;
 
@@ -21,22 +24,17 @@ public class Gameplay : MonoBehaviour
 
     public void EndTurn()
     {
-        /*
-        if (!playerTurn)
-        {
-            Debug.Log("Not player turn!");
-            return;
-        }*/
         playerTurn = false;
         MoveUnits(enemyUnits);
         AIController.Singleton.ChooseAction();
+        endTurn.interactable = false;
     }
 
     public void StartTurn()
     {
-        Debug.Log("Player turn!");
         MoveUnits(playerUnits);
         playerTurn = true;
+        endTurn.interactable = true;
     }
 
     void MoveUnits(List<UnitController> list)
