@@ -193,5 +193,4 @@ public class DebugController : MonoBehaviour
         Gameplay.Singleton.enemyUnits.Add(unitControler);
         Gameplay.Singleton.squares[unitControler.currentSquare].unitOn = unitControler;
     }
-
 }

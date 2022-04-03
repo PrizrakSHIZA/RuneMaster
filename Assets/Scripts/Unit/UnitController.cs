@@ -19,6 +19,9 @@ public class UnitController : MonoBehaviour
     private void Start()
     {
         currentHP = stats.hp;
+        GetComponent<Image>().sprite = stats.sprite;
+        if (playerControl)
+            GetComponent<RectTransform>().localScale = new Vector3(-GetComponent<RectTransform>().localScale.x, GetComponent<RectTransform>().localScale.y, 1f);
     }
 
     public void Move()

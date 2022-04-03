@@ -18,28 +18,129 @@ public class Spell
 
     public static Dictionary<Spells, Spell> Spells = new Dictionary<Spells, Spell>()
     {
-        { global::Spells.S_Soldier, new SpellSummon(Runes.test1, Runes.test2, Cast: (object sender) => {
+        //Demons
+        { global::Spells.S_DemonGreat, new SpellSummon(Runes.magnus, Runes.igni, Cast: (bool player) => 
+        {
+            Unit unit = new Unit(20, 5, 1, Resources.Load<Sprite>("Units/Demon_02"));
 
+            Gameplay.Singleton.Summon(unit, player);
         })},
 
-        { global::Spells.S_BigSoldier, new SpellSummon(Runes.test1, Runes.test2, Runes.test3, (object sender) =>
+        { global::Spells.S_DemonFast, new SpellSummon(Runes.celer, Runes.igni, Cast: (bool player) =>
         {
-            Debug.Log("Spell2");
+            Unit unit = new Unit(8, 2, 3, Resources.Load<Sprite>("Units/Demon_01"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+        //Darkness
+        { global::Spells.S_DarkGreat, new SpellSummon(Runes.magnus, Runes.yami, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(15, 4, 2, Resources.Load<Sprite>("Units/Dark_01"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+
+        { global::Spells.S_DarkFast, new SpellSummon(Runes.celer, Runes.yami, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(8, 2, 3, Resources.Load<Sprite>("Units/Dark_02"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+        //Dirt
+        { global::Spells.S_Dirt, new SpellSummon(Runes.lutum, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(10, 3, 1, Resources.Load<Sprite>("Units/Dirt_01"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+
+        { global::Spells.S_DirtFast, new SpellSummon(Runes.celer, Runes.lutum, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(10, 2, 2, Resources.Load<Sprite>("Units/Dire_02"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+
+        { global::Spells.S_DirtGreat, new SpellSummon(Runes.magnus, Runes.lutum, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(25, 5, 2, Resources.Load<Sprite>("Units/Dirt_03"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+        //Plants
+        { global::Spells.S_Plant, new SpellSummon(Runes.kojo, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(10, 3, 1, Resources.Load<Sprite>("Units/Plants_01"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+
+        { global::Spells.S_PlantFast, new SpellSummon(Runes.celer, Runes.kojo, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(10, 3, 2, Resources.Load<Sprite>("Units/Plants_02"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+
+        { global::Spells.S_PlantGreat, new SpellSummon(Runes.magnus, Runes.kojo, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(10, 8, 2, Resources.Load<Sprite>("Units/Plants_03"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+        //Humans
+        { global::Spells.S_Human, new SpellSummon(Runes.hito, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(8, 3, 2, Resources.Load<Sprite>("Units/Human_01"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+
+        { global::Spells.S_HumanFast, new SpellSummon(Runes.celer, Runes.hito, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(7, 4, 2, Resources.Load<Sprite>("Units/Human_02"));
+
+            Gameplay.Singleton.Summon(unit, player);
+        })},
+
+        { global::Spells.S_HumanGreat, new SpellSummon(Runes.magnus, Runes.hito, Cast: (bool player) =>
+        {
+            Unit unit = new Unit(20, 4, 2, Resources.Load<Sprite>("Units/Human_03"));
+
+            Gameplay.Singleton.Summon(unit, player);
         })},
     };
 }
 
+
 public enum Spells
 { 
-    S_Soldier,
-    S_BigSoldier,
+    //Demons
+    S_DemonGreat,
+    S_DemonFast,
+    //Darkness
+    S_DarkGreat,
+    S_DarkFast,
+    //Dirt
+    S_Dirt,
+    S_DirtFast,
+    S_DirtGreat,
+    //Plants
+    S_Plant,
+    S_PlantFast,
+    S_PlantGreat,
+    //Humans
+    S_Human,
+    S_HumanFast,
+    S_HumanGreat,
+    NumberOf,
 }
 
 public class SpellSummon : Spell
 {
-    public Action<object> Cast;
+    public Action<bool> Cast;
 
-    public SpellSummon(Runes rune1 = Runes.empty, Runes rune2 = Runes.empty, Runes rune3 = Runes.empty, Action<object> Cast = null) : base(rune1, rune2 , rune3)
+    public SpellSummon(Runes rune1 = Runes.empty, Runes rune2 = Runes.empty, Runes rune3 = Runes.empty, Action<bool> Cast = null) : base(rune1, rune2 , rune3)
     { 
         this.Cast = Cast;
     }
@@ -47,9 +148,9 @@ public class SpellSummon : Spell
 
 public class SpellTarget : Spell
 {
-    public Action<object, int> Cast;
+    public Action<bool, int> Cast;
 
-    public SpellTarget(Runes rune1 = Runes.empty, Runes rune2 = Runes.empty, Runes rune3 = Runes.empty, Action<object, int> Cast = null) : base(rune1, rune2, rune3)
+    public SpellTarget(Runes rune1 = Runes.empty, Runes rune2 = Runes.empty, Runes rune3 = Runes.empty, Action<bool, int> Cast = null) : base(rune1, rune2, rune3)
     {
         this.Cast = Cast;
     }

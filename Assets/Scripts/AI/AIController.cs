@@ -28,7 +28,7 @@ public class AIController : MonoBehaviour
             Spell.Spells.TryGetValue(AI.spellList[Random.Range(0, AI.spellList.Count)], out spell);
             if (spell is SpellSummon)
             {
-                (spell as SpellSummon).Cast(this);
+                (spell as SpellSummon).Cast(false);
             }
             else if (spell is SpellTarget)
             {

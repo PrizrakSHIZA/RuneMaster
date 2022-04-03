@@ -10,7 +10,7 @@ public class Rune
     public Thome thome { get; }
     public Sprite sprite { get; }
 
-    Rune(string name, Runes type, Thome thome)
+    Rune(string name, Runes type, Thome thome = Thome.general)
     {
         this.name = name;
         this.type = type;
@@ -20,9 +20,13 @@ public class Rune
 
     public static List<Rune> RuneList = new List<Rune>
     {
-        new Rune("Test1", Runes.test1, Thome.general),
-        new Rune("Test2", Runes.test2, Thome.general),
-        new Rune("Test3", Runes.test3, Thome.general),
+        new Rune("Igni", Runes.igni),
+        new Rune("Hito", Runes.hito),
+        new Rune("Magnus", Runes.magnus),
+        new Rune("Kojo", Runes.kojo),
+        new Rune("Lutum", Runes.lutum),
+        new Rune("Celer", Runes.celer),
+        new Rune("Yami", Runes.yami),
     };
 
     public static Rune GetRune(Runes type)
@@ -40,9 +44,13 @@ public class Rune
 public enum Runes
 { 
     empty,
-    test1,
-    test2,
-    test3,
+    igni,
+    hito,
+    magnus,
+    kojo,
+    lutum,
+    celer,
+    yami,
     NumberOf
 }
 

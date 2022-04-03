@@ -7,6 +7,7 @@ public class Gameplay : MonoBehaviour
     public static Gameplay Singleton;
 
     [SerializeField] Button endTurn;
+    [SerializeField] GameObject prefab;
 
     public Transform field;
 
@@ -44,4 +45,27 @@ public class Gameplay : MonoBehaviour
             unit.Move();
         }
     }
+
+    public void Summon(Unit unit, bool player)
+    {
+        var temp = Instantiate(prefab, field);
+        var unitControler = temp.GetComponent<UnitController>();
+
+        unitControler.stats = unit;
+        unitControler.playerControl = player;
+        if (player)
+        {
+            temp.GetComponent<RectTransform>().anchoredPosition = squares[0].anchoredPosition;
+            unitControler.currentSquare = 0;
+            playerUnits.Add(unitControler);
+        }
+        else
+        {
+            temp.GetComponent<RectTransform>().anchoredPosition = squares[squares.Count - 1].anchoredPosition;
+            unitControler.currentSquare = squares.Count - 1;
+            enemyUnits.Add(unitControler);
+        }
+        squares[unitControler.currentSquare].unitOn = unitControler;
+    }
+
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -17,11 +19,11 @@ public class PlayerData
     public PlayerData()
     {
         unlockedRunes = new List<Runes>() 
-        {
-            Runes.test1,
-            Runes.test2,
-            Runes.test3,
+        {  
         };
+        unlockedRunes = Enum.GetValues(typeof(Runes)).Cast<Runes>().ToList();
+        unlockedRunes.Remove(Runes.empty);
+        unlockedRunes.Remove(Runes.NumberOf);
         maxHP = 10;
         maxMana = 10;
     }

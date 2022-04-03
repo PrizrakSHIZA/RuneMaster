@@ -34,14 +34,14 @@ public class PlayerController : MonoBehaviour
             if (currentSpell.SequenceEqual(spell.spellRunes))
             {
                 if (spell is SpellSummon)
-                    (spell as SpellSummon).Cast(this);
+                    (spell as SpellSummon).Cast(true);
                 else if (spell is SpellTarget)
                 {
                     throw new KeyNotFoundException();
 
                     int target = 0;
                     //Choose target, then
-                    (spell as SpellTarget).Cast(this, target);
+                    (spell as SpellTarget).Cast(true, target);
                 }
                 return;
             }
