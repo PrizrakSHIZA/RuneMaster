@@ -1776,6 +1776,7 @@ MonoBehaviour:
     unlockedRunes: 
     maxMana: 0
     maxHP: 0
+  castBtn: {fileID: 2003259391}
 --- !u!114 &1242647343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2083,7 +2084,7 @@ GameObject:
   - component: {fileID: 1367988801}
   - component: {fileID: 1367988800}
   m_Layer: 5
-  m_Name: End Turn
+  m_Name: BTN_End Turn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2656,7 +2657,7 @@ GameObject:
   - component: {fileID: 1737517088}
   - component: {fileID: 1737517087}
   m_Layer: 5
-  m_Name: OpenBook
+  m_Name: BTN_OpenBook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3056,7 +3057,7 @@ GameObject:
   - component: {fileID: 2003259392}
   - component: {fileID: 2003259391}
   m_Layer: 5
-  m_Name: Summon
+  m_Name: BTN_Cast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

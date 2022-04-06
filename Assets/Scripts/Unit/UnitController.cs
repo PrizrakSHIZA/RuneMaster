@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UnitController : MonoBehaviour
 {
@@ -92,24 +92,29 @@ public class UnitController : MonoBehaviour
         {
             if (currentSquare == Gameplay.Singleton.squares.Count - 2)
             {
-                //Enemy controller
+                //Attack Enemy controller
                 Debug.Log("Attack enemy hero!");
             }
             else
             {
+                //Attack enemy unit
                 Gameplay.Singleton.squares[currentSquare + 1].unitOn.TakeDamage(stats.damage);
+                AttackAnimation();
             }
         }
         else
         {
             if (currentSquare == 1)
             {
+                //Attack player controller
                 PlayerController.Singleton.TakeDamage(stats.damage);
                 Debug.Log("Attack player hero!");
             }
             else
             {
+                //Attack player unit
                 Gameplay.Singleton.squares[currentSquare - 1].unitOn.TakeDamage(stats.damage);
+                AttackAnimation();
             }
         }
     }
@@ -118,6 +123,7 @@ public class UnitController : MonoBehaviour
     {
         currentHP = Mathf.Clamp(currentHP - damage, 0, stats.hp);
         Debug.Log($"Under attack! {currentHP}");
+        TakeDamageAnimation();
 
         hpBar.DOFillAmount((100f / stats.hp * currentHP) / 100f, 2f).OnComplete(()=>
         {
@@ -143,6 +149,30 @@ public class UnitController : MonoBehaviour
     public void GetDamageModifier()
     {
 
+    }
+
+    public void AttackAnimation()
+    {
+        int owner = -1;
+        if (playerControl)
+            owner = 1;
+        Vector3 startPos = transform.position;
+        Vector3 endPos = (startPos + Gameplay.Singleton.squares[currentSquare + 1 * owner].transform.position);
+        endPos = new Vector3(endPos.x / 2, startPos.y, startPos.z);
+
+        transform.DOMove(endPos, 0.3f).OnComplete(() => 
+        {
+            transform.DOMove(startPos, 0.5f);
+        });
+    }
+
+    public void TakeDamageAnimation()
+    {
+        transform.DOShakePosition(1f, 3);
+        GetComponent<Image>().DOColor(Color.red, 0.5f).OnComplete(() =>
+        {
+            GetComponent<Image>().DOColor(Color.white, 0.5f);
+        });
     }
 }
 

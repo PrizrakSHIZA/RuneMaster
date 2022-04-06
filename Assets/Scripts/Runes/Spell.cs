@@ -56,7 +56,7 @@ public class Spell
 
         { global::Spells.S_DirtFast, new SpellSummon(Runes.celer, Runes.lutum, Cast: (bool player) =>
         {
-            Unit unit = new Unit(10, 2, 2, Resources.Load<Sprite>("Units/Dire_02"));
+            Unit unit = new Unit(10, 2, 2, Resources.Load<Sprite>("Units/Dirt_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},

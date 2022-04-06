@@ -26,6 +26,7 @@ public class RuneButton : MonoBehaviour
         else
         {
             PlayerController.Singleton.currentSpell.Remove(rune);
+            RuneBook.Singleton.addedRunes.Remove(gameObject);
             Destroy(gameObject);
         }
     }

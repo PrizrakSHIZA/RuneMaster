@@ -13,6 +13,8 @@ public class RuneBook : MonoBehaviour
 
     List<Runes> runeList = new List<Runes>();
 
+    public List<GameObject> addedRunes = new List<GameObject>();
+
     private void Start()
     {
         Singleton = this;
@@ -32,5 +34,15 @@ public class RuneBook : MonoBehaviour
         temp.GetComponent<Image>().sprite = Rune.GetRune(rune).sprite;
         temp.GetComponent<RuneButton>().rune = rune;
         temp.GetComponent<RuneButton>().inBook = false;
+        addedRunes.Add(temp);
+    }
+
+    public void ClearRunes()
+    {
+        foreach (GameObject go in addedRunes)
+        {
+            Destroy(go);
+        }
+        addedRunes.Clear();
     }
 }

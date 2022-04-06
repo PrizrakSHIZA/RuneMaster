@@ -26,9 +26,9 @@ public class Gameplay : MonoBehaviour
     public void EndTurn()
     {
         playerTurn = false;
+        endTurn.interactable = false;
         MoveUnits(enemyUnits);
         AIController.Singleton.ChooseAction();
-        endTurn.interactable = false;
     }
 
     public void StartTurn()
@@ -36,6 +36,7 @@ public class Gameplay : MonoBehaviour
         MoveUnits(playerUnits);
         playerTurn = true;
         endTurn.interactable = true;
+        PlayerController.Singleton.CanCast();
     }
 
     void MoveUnits(List<UnitController> list)
@@ -67,5 +68,4 @@ public class Gameplay : MonoBehaviour
         }
         squares[unitControler.currentSquare].unitOn = unitControler;
     }
-
 }

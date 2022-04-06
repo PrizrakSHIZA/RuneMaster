@@ -10,7 +10,9 @@ public class PlayerController : MonoBehaviour
     public List<Runes> currentSpell = new List<Runes>();
 
     public PlayerData data;
-    
+
+    [SerializeField] Button castBtn;
+
     int mana;
     int hp;
 
@@ -29,6 +31,10 @@ public class PlayerController : MonoBehaviour
 
     public void Cast()
     {
+        //Safety mode
+        if (currentSpell.Count == 0)
+            return;
+
         foreach (Spell spell in Spell.Spells.Values)
         {
             if (currentSpell.SequenceEqual(spell.spellRunes))
@@ -43,10 +49,19 @@ public class PlayerController : MonoBehaviour
                     //Choose target, then
                     (spell as SpellTarget).Cast(true, target);
                 }
+                Casted();
                 return;
             }
         }
+        Casted();
         Debug.Log("No such spell");
+    }
+
+    public void Casted()
+    {
+        currentSpell.Clear();
+        RuneBook.Singleton.ClearRunes();
+        castBtn.interactable = false;
     }
 
     public void TakeDamage(int damage)
@@ -58,5 +73,10 @@ public class PlayerController : MonoBehaviour
             //GameOver
         }
         Debug.Log($"Now hp is {hp}");
+    }
+
+    public void CanCast()
+    {
+        castBtn.interactable = true;
     }
 }
