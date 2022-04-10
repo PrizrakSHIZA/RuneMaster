@@ -103,6 +103,9 @@ public class DebugController : MonoBehaviour
 
     private void OnGUI()
     {
+        if (!Application.isEditor)
+            return;
+
         if (!showConsole) return;
 
         float y = 0f;

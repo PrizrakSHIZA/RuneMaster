@@ -1,7 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class UnitController : MonoBehaviour
 {
@@ -16,6 +15,13 @@ public class UnitController : MonoBehaviour
 
     const float _TimeToMove = 1f;
 
+    public static int inAction;
+
+    private int Owner
+    {
+        get { if (playerControl) return 1; else return -1; }
+    }
+
     private void Start()
     {
         currentHP = stats.hp;
@@ -26,28 +32,24 @@ public class UnitController : MonoBehaviour
 
     public void Move()
     {
-        //change owner modifier which will be used in bext formulas
-        int owner = -1;
-        if (playerControl)
-            owner = 1;
-
+        inAction++;
 
         //Check for unit on the way
         for (int i = 1; i <= stats.speed; i++)
         {
-            UnitController unit = Gameplay.Singleton.squares[currentSquare + i * owner].unitOn;
+            UnitController unit = Gameplay.Singleton.squares[currentSquare + i * Owner].unitOn;
             if (unit != null)
             {
                 //check if ally
                 if (unit.IsAlly(this))
                 {
-                    int moveTo = unit.currentSquare - 1 * owner;
+                    int moveTo = unit.currentSquare - 1 * Owner;
                     PerformMove(moveTo);
                     return;
                 }
                 else
                 {
-                    int moveTo = unit.currentSquare - 1 * owner;
+                    int moveTo = unit.currentSquare - 1 * Owner;
                     PerformMove(moveTo, true);
                     return;
                 }
@@ -55,7 +57,7 @@ public class UnitController : MonoBehaviour
         }
 
         //If noone on the way
-        int to = currentSquare + stats.speed * owner;
+        int to = currentSquare + stats.speed * Owner;
         PerformMove(to, false);
     }
 
@@ -81,19 +83,21 @@ public class UnitController : MonoBehaviour
             .OnComplete(() => 
             {
                 if (attack)
-                    Attack(); //do nothing
+                    Attack();
+                else
+                    inAction--;
             });
     }
 
     public void Attack()
     {
-        Debug.Log("Attack!");
         if (playerControl)
         {
             if (currentSquare == Gameplay.Singleton.squares.Count - 2)
             {
                 //Attack Enemy controller
                 Debug.Log("Attack enemy hero!");
+                inAction--;
             }
             else
             {
@@ -109,6 +113,7 @@ public class UnitController : MonoBehaviour
                 //Attack player controller
                 PlayerController.Singleton.TakeDamage(stats.damage);
                 Debug.Log("Attack player hero!");
+                inAction--;
             }
             else
             {
@@ -121,9 +126,10 @@ public class UnitController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        inAction++;
         currentHP = Mathf.Clamp(currentHP - damage, 0, stats.hp);
         Debug.Log($"Under attack! {currentHP}");
-        TakeDamageAnimation();
+        TakeDamageAnimation(); // take 1s right now. Shold be checked that its faster than next animation (2s now)
 
         hpBar.DOFillAmount((100f / stats.hp * currentHP) / 100f, 2f).OnComplete(()=>
         {
@@ -135,6 +141,7 @@ public class UnitController : MonoBehaviour
                     Gameplay.Singleton.enemyUnits.Remove(this);
                 Destroy(gameObject);
             }
+            inAction--;
         });
    }
 
@@ -162,7 +169,10 @@ public class UnitController : MonoBehaviour
 
         transform.DOMove(endPos, 0.3f).OnComplete(() => 
         {
-            transform.DOMove(startPos, 0.5f);
+            transform.DOMove(startPos, 0.5f).OnComplete(() => 
+            {
+                inAction--;
+            });
         });
     }
 

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Rune
 {
@@ -10,23 +9,26 @@ public class Rune
     public Thome thome { get; }
     public Sprite sprite { get; }
 
-    Rune(string name, Runes type, Thome thome = Thome.general)
+    public int cost { get; }
+
+    Rune(string name, Runes type, Thome thome = Thome.general, int cost = 1)
     {
         this.name = name;
         this.type = type;
         this.thome = thome;
+        this.cost = cost;
         sprite = Resources.Load<Sprite>($"Runes/{name}");
     }
 
     public static List<Rune> RuneList = new List<Rune>
     {
-        new Rune("Igni", Runes.igni),
-        new Rune("Hito", Runes.hito),
-        new Rune("Magnus", Runes.magnus),
-        new Rune("Kojo", Runes.kojo),
-        new Rune("Lutum", Runes.lutum),
-        new Rune("Celer", Runes.celer),
-        new Rune("Yami", Runes.yami),
+        new Rune("Igni", Runes.igni, cost:5),
+        new Rune("Hito", Runes.hito, cost:5),
+        new Rune("Magnus", Runes.magnus, cost:3),
+        new Rune("Kojo", Runes.kojo, cost:5),
+        new Rune("Lutum", Runes.lutum, cost:5),
+        new Rune("Celer", Runes.celer, cost:2),
+        new Rune("Yami", Runes.yami, cost:5),
     };
 
     public static Rune GetRune(Runes type)

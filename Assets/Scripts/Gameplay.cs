@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +17,6 @@ public class Gameplay : MonoBehaviour
     public List<UnitController> playerUnits = new List<UnitController>();
     public List<UnitController> enemyUnits = new List<UnitController>();
 
-    bool playerTurn = true;
-
     private void Start()
     {
         Singleton = this;
@@ -25,16 +24,27 @@ public class Gameplay : MonoBehaviour
 
     public void EndTurn()
     {
-        playerTurn = false;
+        StartCoroutine(EndTurnCoro());
+    }
+
+    IEnumerator EndTurnCoro()
+    {
         endTurn.interactable = false;
         MoveUnits(enemyUnits);
+        yield return new WaitUntil(() => UnitController.inAction == 0);
         AIController.Singleton.ChooseAction();
     }
 
     public void StartTurn()
     {
+        StartCoroutine(StartTurnCoro());
+    }
+
+    IEnumerator StartTurnCoro()
+    {
+        PlayerController.Singleton.RegenMana();
         MoveUnits(playerUnits);
-        playerTurn = true;
+        yield return new WaitUntil(() => UnitController.inAction == 0);
         endTurn.interactable = true;
         PlayerController.Singleton.CanCast();
     }

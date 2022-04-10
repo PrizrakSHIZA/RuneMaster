@@ -10,6 +10,7 @@ public class PlayerData
     public List<Runes> unlockedRunes;
     public int maxMana;
     public int maxHP;
+    public int manaRegen;
 
     public PlayerData(List<Runes> unlockedRunes)
     {
@@ -21,10 +22,13 @@ public class PlayerData
         unlockedRunes = new List<Runes>() 
         {  
         };
+        #region temporary
         unlockedRunes = Enum.GetValues(typeof(Runes)).Cast<Runes>().ToList();
         unlockedRunes.Remove(Runes.empty);
         unlockedRunes.Remove(Runes.NumberOf);
+        #endregion
         maxHP = 10;
-        maxMana = 10;
+        maxMana = 50;
+        manaRegen = 5;
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,15 +9,20 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Singleton;
 
-    public List<Runes> currentSpell = new List<Runes>();
+    public ObservableCollection<Runes> currentSpell = new ObservableCollection<Runes>();
 
     public PlayerData data;
 
     [SerializeField] Button castBtn;
+    [Space()]
+    [Header("Mana")]
+    [SerializeField] Image manaFill;
+    [SerializeField] Image manaUsage;
 
     int mana;
     int hp;
 
+    //----------------------------------
     private void Start()
     {
         Singleton = this;
@@ -27,6 +34,17 @@ public class PlayerController : MonoBehaviour
 
         hp = data.maxHP;
         mana = data.maxMana;
+
+        currentSpell.CollectionChanged += SpellChanged;
+    }
+
+    void SpellChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        manaUsage.fillAmount = 0;
+        foreach (Runes rune in currentSpell)
+        {
+            manaUsage.fillAmount += (float)Rune.GetRune(rune).cost / (float)data.maxMana;
+        }
     }
 
     public void Cast()
@@ -34,6 +52,10 @@ public class PlayerController : MonoBehaviour
         //Safety mode
         if (currentSpell.Count == 0)
             return;
+
+        if (!CheckIfEnoughtMana())
+            return;
+
 
         foreach (Spell spell in Spell.Spells.Values)
         {
@@ -78,5 +100,34 @@ public class PlayerController : MonoBehaviour
     public void CanCast()
     {
         castBtn.interactable = true;
+    }
+
+    //Mana
+    public void RegenMana()
+    {
+        mana += data.manaRegen;
+        UpdateManaUI();
+    }
+    
+    private bool CheckIfEnoughtMana()
+    {
+        int manacost = 0;
+        foreach (Runes rune in currentSpell)
+        {
+            manacost += Rune.GetRune(rune).cost;
+        }
+        if (manacost > mana)
+            return false; // not enought mana
+        else
+        {
+            mana -= manacost;
+            UpdateManaUI();
+            return true;
+        }
+    }
+
+    private void UpdateManaUI()
+    {
+        manaFill.fillAmount = (float)mana / (float)data.maxMana;
     }
 }
