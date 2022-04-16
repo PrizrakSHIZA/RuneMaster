@@ -1883,14 +1883,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c585e86f0942240bed4145c26b2ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSpell: 
   data:
     unlockedRunes: 
     maxMana: 0
     maxHP: 0
+    manaRegen: 5
   castBtn: {fileID: 2003259391}
   manaFill: {fileID: 428674094}
   manaUsage: {fileID: 1263524354}
+  usingColor: {r: 0.12941177, g: 0.35686275, b: 0.7490196, a: 1}
+  redColor: {r: 0.7490196, g: 0.12941177, b: 0.1764706, a: 0.49803922}
 --- !u!114 &1242647343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2081,7 +2083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.11525454, g: 0.31253728, b: 0.6603774, a: 1}
+  m_Color: {r: 0.11372549, g: 0.3137255, b: 0.65882355, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

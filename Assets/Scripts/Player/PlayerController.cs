@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Image manaFill;
     [SerializeField] Image manaUsage;
 
+    public Color usingColor = new Color(29, 80, 168, 255);
+    public Color redColor = new Color(168, 29, 39, 255);
+
     int mana;
     int hp;
 
@@ -44,6 +47,10 @@ public class PlayerController : MonoBehaviour
         foreach (Runes rune in currentSpell)
         {
             manaUsage.fillAmount += (float)Rune.GetRune(rune).cost / (float)data.maxMana;
+            if (!EnoughtMana())
+                manaUsage.color = redColor;
+            else
+                manaUsage.color = usingColor;
         }
     }
 
@@ -53,7 +60,7 @@ public class PlayerController : MonoBehaviour
         if (currentSpell.Count == 0)
             return;
 
-        if (!CheckIfEnoughtMana())
+        if (!TrySpendMana())
             return;
 
 
@@ -109,7 +116,7 @@ public class PlayerController : MonoBehaviour
         UpdateManaUI();
     }
     
-    private bool CheckIfEnoughtMana()
+    private bool TrySpendMana()
     {
         int manacost = 0;
         foreach (Runes rune in currentSpell)
@@ -122,6 +129,21 @@ public class PlayerController : MonoBehaviour
         {
             mana -= manacost;
             UpdateManaUI();
+            return true;
+        }
+    }
+
+    private bool EnoughtMana()
+    {
+        int manacost = 0;
+        foreach (Runes rune in currentSpell)
+        {
+            manacost += Rune.GetRune(rune).cost;
+        }
+        if (manacost > mana)
+            return false; // not enought mana
+        else
+        {
             return true;
         }
     }
