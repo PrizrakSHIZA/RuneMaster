@@ -11,4 +11,5 @@ public class AI_SO : ScriptableObject
     public int smartChance;
 
     public int HP;
+    public int mana;
 }

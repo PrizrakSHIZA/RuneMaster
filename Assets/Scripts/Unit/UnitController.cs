@@ -64,12 +64,12 @@ public class UnitController : MonoBehaviour
     void PerformMove(int moveTo, bool attack = false)
     {
         Gameplay.Singleton.squares[currentSquare].unitOn = null;
-        if (moveTo >= Gameplay.Singleton.squares.Count)
+        if (moveTo >= Gameplay.Singleton.squares.Count && Owner == 1)
         {
             moveTo = Gameplay.Singleton.squares.Count - 2;
             attack = true;
         }
-        else if (moveTo <= 0)
+        else if (moveTo <= 0 && Owner == -1)
         {
             moveTo = 1;
             attack = true;
@@ -96,8 +96,8 @@ public class UnitController : MonoBehaviour
             if (currentSquare == Gameplay.Singleton.squares.Count - 2)
             {
                 //Attack Enemy controller
-                Debug.Log("Attack enemy hero!");
-                inAction--;
+                AIController.Singleton.TakeDamage(stats.damage);
+                AttackAnimation();
             }
             else
             {
@@ -111,9 +111,8 @@ public class UnitController : MonoBehaviour
             if (currentSquare == 1)
             {
                 //Attack player controller
+                AttackAnimation();
                 PlayerController.Singleton.TakeDamage(stats.damage);
-                Debug.Log("Attack player hero!");
-                inAction--;
             }
             else
             {

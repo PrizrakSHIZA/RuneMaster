@@ -20,108 +20,118 @@ public class Spell
     {
         #region summon spells
         //Demons
-        { global::Spells.S_DemonGreat, new SpellSummon(Runes.magnus, Runes.igni, Cast: (bool player) => 
+        { global::Spells.S_DemonGreat, new SpellSummon(Runes.magnus, Runes.igni, Cast: (bool player) =>
         {
-            Unit unit = new Unit(20, 5, 1, Resources.Load<Sprite>("Units/Demon_02"));
+            Unit unit = new Unit(9, 6, 1, Resources.Load<Sprite>("Units/Demon_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_DemonFast, new SpellSummon(Runes.celer, Runes.igni, Cast: (bool player) =>
         {
-            Unit unit = new Unit(8, 2, 3, Resources.Load<Sprite>("Units/Demon_01"));
+            Unit unit = new Unit(8, 3, 3, Resources.Load<Sprite>("Units/Demon_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
         //Darkness
         { global::Spells.S_DarkGreat, new SpellSummon(Runes.magnus, Runes.yami, Cast: (bool player) =>
         {
-            Unit unit = new Unit(15, 4, 2, Resources.Load<Sprite>("Units/Dark_01"));
+            Unit unit = new Unit(12, 7, 1, Resources.Load<Sprite>("Units/Dark_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_DarkFast, new SpellSummon(Runes.celer, Runes.yami, Cast: (bool player) =>
         {
-            Unit unit = new Unit(8, 2, 3, Resources.Load<Sprite>("Units/Dark_02"));
+            Unit unit = new Unit(10, 5, 3, Resources.Load<Sprite>("Units/Dark_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
         //Dirt
         { global::Spells.S_Dirt, new SpellSummon(Runes.lutum, Cast: (bool player) =>
         {
-            Unit unit = new Unit(10, 3, 1, Resources.Load<Sprite>("Units/Dirt_01"));
+            Unit unit = new Unit(3, 2, 1, Resources.Load<Sprite>("Units/Dirt_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_DirtFast, new SpellSummon(Runes.celer, Runes.lutum, Cast: (bool player) =>
         {
-            Unit unit = new Unit(10, 2, 2, Resources.Load<Sprite>("Units/Dirt_02"));
+            Unit unit = new Unit(5, 3, 2, Resources.Load<Sprite>("Units/Dirt_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_DirtGreat, new SpellSummon(Runes.magnus, Runes.lutum, Cast: (bool player) =>
         {
-            Unit unit = new Unit(25, 5, 2, Resources.Load<Sprite>("Units/Dirt_03"));
+            Unit unit = new Unit(6, 6, 1, Resources.Load<Sprite>("Units/Dirt_03"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
         //Plants
         { global::Spells.S_Plant, new SpellSummon(Runes.kojo, Cast: (bool player) =>
         {
-            Unit unit = new Unit(10, 3, 1, Resources.Load<Sprite>("Units/Plants_01"));
+            Unit unit = new Unit(2, 5, 1, Resources.Load<Sprite>("Units/Plants_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_PlantFast, new SpellSummon(Runes.celer, Runes.kojo, Cast: (bool player) =>
         {
-            Unit unit = new Unit(10, 3, 2, Resources.Load<Sprite>("Units/Plants_02"));
+            Unit unit = new Unit(3, 7, 2, Resources.Load<Sprite>("Units/Plants_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_PlantGreat, new SpellSummon(Runes.magnus, Runes.kojo, Cast: (bool player) =>
         {
-            Unit unit = new Unit(10, 8, 2, Resources.Load<Sprite>("Units/Plants_03"));
+            Unit unit = new Unit(4, 8, 2, Resources.Load<Sprite>("Units/Plants_03"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
         //Humans
         { global::Spells.S_Human, new SpellSummon(Runes.hito, Cast: (bool player) =>
         {
-            Unit unit = new Unit(8, 3, 2, Resources.Load<Sprite>("Units/Human_01"));
+            Unit unit = new Unit(4, 2, 2, Resources.Load<Sprite>("Units/Human_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_HumanFast, new SpellSummon(Runes.celer, Runes.hito, Cast: (bool player) =>
         {
-            Unit unit = new Unit(7, 4, 2, Resources.Load<Sprite>("Units/Human_02"));
+            Unit unit = new Unit(6, 3, 3, Resources.Load<Sprite>("Units/Human_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_HumanGreat, new SpellSummon(Runes.magnus, Runes.hito, Cast: (bool player) =>
         {
-            Unit unit = new Unit(20, 4, 2, Resources.Load<Sprite>("Units/Human_03"));
+            Unit unit = new Unit(8, 4, 2, Resources.Load<Sprite>("Units/Human_03"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
         #endregion
         #region target spells
-        { global::Spells.T_CastFire , new SpellTarget(Runes.igni, Cast:(bool player, int target) => 
+        { global::Spells.T_CastFire, new SpellTarget(Runes.igni, Cast:(bool player, int target) =>
         {
             Gameplay.Singleton.SpawnParticle("FireBlow", target);
             if(Gameplay.Singleton.squares[target].unitOn != null)
                 Gameplay.Singleton.squares[target].unitOn.TakeDamage(5);
         })},
-        { global::Spells.T_Fireball , new SpellTarget(Runes.igni, Runes.igni, Cast:(bool player, int target) =>
+        { global::Spells.T_Fireball, new SpellTarget(Runes.igni, Runes.igni, Cast:(bool player, int target) =>
         {
+            Gameplay.Singleton.SpawnParticle("FireBlow", target);
             if(Gameplay.Singleton.squares[target].unitOn != null)
                 Gameplay.Singleton.squares[target].unitOn.TakeDamage(15);
+        })},
+        { global::Spells.T_FireSplash, new SpellTarget(Runes.igni, Runes.igni, Runes.igni, Cast:(bool player, int target) =>
+        {
+            for (int i = -1; i < 2; i++)
+            {
+                Gameplay.Singleton.SpawnParticle("FireBlow", target + i);
+                if(Gameplay.Singleton.squares[target + i].unitOn != null)
+                    Gameplay.Singleton.squares[target + i].unitOn.TakeDamage(15);
+            }
         })},
         #endregion
     };

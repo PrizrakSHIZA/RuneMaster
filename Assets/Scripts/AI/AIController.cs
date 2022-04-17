@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AIController : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class AIController : MonoBehaviour
     public AI_SO AI;
 
     public int hp;
+
+    [Header("HP")]
+    [SerializeField] Image hpBar;
 
     private void Start()
     {
@@ -41,6 +46,9 @@ public class AIController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         hp -= damage;
+
+        hpBar.DOFillAmount((100f / AI.HP * hp) / 100f, 1f);
+
         if (hp <= 0)
         {
             hp = 0;

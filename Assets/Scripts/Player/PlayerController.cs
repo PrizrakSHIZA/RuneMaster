@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,9 +18,11 @@ public class PlayerController : MonoBehaviour
     [Header("Mana")]
     [SerializeField] Image manaFill;
     [SerializeField] Image manaUsage;
+    [Header("HP")]
+    [SerializeField] Image hpBar;
 
     [Header("Target system")]
-    [SerializeField] GameObject[] targets;
+    public GameObject[] targets;
 
     public Color usingColor = new Color(29, 80, 168, 1f);
     public Color redColor = new Color(168, 29, 39, 1f);
@@ -116,6 +119,9 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         hp -= damage;
+
+        hpBar.DOFillAmount((100f / data.maxHP * hp) / 100f, 1f);
+
         if (hp <= 0)
         {
             hp = 0;
