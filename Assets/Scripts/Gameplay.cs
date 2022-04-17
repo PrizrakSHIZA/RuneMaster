@@ -17,6 +17,9 @@ public class Gameplay : MonoBehaviour
     public List<UnitController> playerUnits = new List<UnitController>();
     public List<UnitController> enemyUnits = new List<UnitController>();
 
+    [SerializeField] ParticleSystem PS;
+
+    // -----------------
     private void Start()
     {
         Singleton = this;
@@ -30,6 +33,7 @@ public class Gameplay : MonoBehaviour
     IEnumerator EndTurnCoro()
     {
         endTurn.interactable = false;
+        PlayerController.Singleton.CanCast(false);
         MoveUnits(enemyUnits);
         yield return new WaitUntil(() => UnitController.inAction == 0);
         AIController.Singleton.ChooseAction();
@@ -77,5 +81,12 @@ public class Gameplay : MonoBehaviour
             enemyUnits.Add(unitControler);
         }
         squares[unitControler.currentSquare].unitOn = unitControler;
+    }
+
+    public void SpawnParticle(string name, int target)
+    {
+        var temp = Instantiate(Resources.Load<ParticleSystem>($"ParticleSystem/{name}"), squares[target].transform);
+        temp.transform.position += new Vector3(0, 1.5f, 0);
+        Destroy(temp, 5f);
     }
 }

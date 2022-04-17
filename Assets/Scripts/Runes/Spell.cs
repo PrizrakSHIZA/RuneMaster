@@ -18,6 +18,7 @@ public class Spell
 
     public static Dictionary<Spells, Spell> Spells = new Dictionary<Spells, Spell>()
     {
+        #region summon spells
         //Demons
         { global::Spells.S_DemonGreat, new SpellSummon(Runes.magnus, Runes.igni, Cast: (bool player) => 
         {
@@ -109,6 +110,20 @@ public class Spell
 
             Gameplay.Singleton.Summon(unit, player);
         })},
+        #endregion
+        #region target spells
+        { global::Spells.T_CastFire , new SpellTarget(Runes.igni, Cast:(bool player, int target) => 
+        {
+            Gameplay.Singleton.SpawnParticle("FireBlow", target);
+            if(Gameplay.Singleton.squares[target].unitOn != null)
+                Gameplay.Singleton.squares[target].unitOn.TakeDamage(5);
+        })},
+        { global::Spells.T_Fireball , new SpellTarget(Runes.igni, Runes.igni, Cast:(bool player, int target) =>
+        {
+            if(Gameplay.Singleton.squares[target].unitOn != null)
+                Gameplay.Singleton.squares[target].unitOn.TakeDamage(15);
+        })},
+        #endregion
     };
 }
 
@@ -133,6 +148,11 @@ public enum Spells
     S_Human,
     S_HumanFast,
     S_HumanGreat,
+    // ---- target spells
+    //Fire
+    T_CastFire,
+    T_Fireball,
+    T_FireSplash,
     NumberOf,
 }
 

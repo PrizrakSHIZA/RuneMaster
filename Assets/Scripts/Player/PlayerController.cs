@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
@@ -19,11 +18,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Image manaFill;
     [SerializeField] Image manaUsage;
 
-    public Color usingColor = new Color(29, 80, 168, 255);
-    public Color redColor = new Color(168, 29, 39, 255);
+    [Header("Target system")]
+    [SerializeField] GameObject[] targets;
+
+    public Color usingColor = new Color(29, 80, 168, 1f);
+    public Color redColor = new Color(168, 29, 39, 1f);
 
     int mana;
     int hp;
+
+    int target;
 
     //----------------------------------
     private void Start()
@@ -72,11 +76,8 @@ public class PlayerController : MonoBehaviour
                     (spell as SpellSummon).Cast(true);
                 else if (spell is SpellTarget)
                 {
-                    throw new KeyNotFoundException();
-
-                    int target = 0;
-                    //Choose target, then
-                    (spell as SpellTarget).Cast(true, target);
+                    target = -1;
+                    StartCoroutine(SelectTarget(spell));
                 }
                 Casted();
                 return;
@@ -84,6 +85,25 @@ public class PlayerController : MonoBehaviour
         }
         Casted();
         Debug.Log("No such spell");
+    }
+
+    private IEnumerator SelectTarget(Spell spell)
+    {
+        foreach (GameObject go in targets)
+            go.SetActive(true);
+
+        while (target<0)
+            yield return null;
+
+        (spell as SpellTarget).Cast(true, target);
+
+        foreach (GameObject go in targets)
+            go.SetActive(false);
+    }
+
+    public void TargetSelected(int number)
+    {
+        target = number;
     }
 
     public void Casted()
@@ -104,9 +124,9 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"Now hp is {hp}");
     }
 
-    public void CanCast()
+    public void CanCast(bool active = true)
     {
-        castBtn.interactable = true;
+        castBtn.interactable = active;
     }
 
     //Mana

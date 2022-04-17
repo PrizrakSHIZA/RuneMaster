@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RuneButton : MonoBehaviour
+public class RuneButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Runes rune;
     public bool inBook = true;
@@ -29,5 +30,15 @@ public class RuneButton : MonoBehaviour
             RuneBook.Singleton.addedRunes.Remove(gameObject);
             Destroy(gameObject);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        RuneBook.Singleton.ShowDescription(Rune.GetRune(rune));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        RuneBook.Singleton.ClearDescription();
     }
 }

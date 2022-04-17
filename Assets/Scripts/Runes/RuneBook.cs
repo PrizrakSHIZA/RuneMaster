@@ -11,6 +11,14 @@ public class RuneBook : MonoBehaviour
     [SerializeField] GameObject prefab;
     [SerializeField] Transform runePlace;
 
+    #region Description
+    [Space()]
+    [Header("Description")]
+    [SerializeField] Image runeimage;
+    [SerializeField] Text name;
+    [SerializeField] Text desc;
+    #endregion
+
     List<Runes> runeList = new List<Runes>();
 
     public List<GameObject> addedRunes = new List<GameObject>();
@@ -45,4 +53,23 @@ public class RuneBook : MonoBehaviour
         }
         addedRunes.Clear();
     }
+
+
+    #region Descriptiobn
+    public void ShowDescription(Rune rune)
+    {
+        runeimage.sprite = rune.sprite;
+        runeimage.color = new Color(255, 255, 255, 1f);
+        name.text = rune.name;
+        desc.text = rune.description;
+    }
+
+    public void ClearDescription()
+    {
+        runeimage.sprite = null;
+        runeimage.color = new Color(255, 255, 255, 0.3f);
+        name.text = "";
+        desc.text = "";
+    }
+    #endregion
 }

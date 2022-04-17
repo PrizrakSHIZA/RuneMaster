@@ -89,7 +89,7 @@ public class UnitController : MonoBehaviour
             });
     }
 
-    public void Attack()
+    void Attack()
     {
         if (playerControl)
         {
@@ -158,7 +158,7 @@ public class UnitController : MonoBehaviour
 
     }
 
-    public void AttackAnimation()
+    void AttackAnimation()
     {
         int owner = -1;
         if (playerControl)
