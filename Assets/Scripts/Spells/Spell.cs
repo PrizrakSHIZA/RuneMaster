@@ -116,13 +116,13 @@ public class Spell
         {
             Gameplay.Singleton.SpawnParticle("FireBlow", target);
             if(Gameplay.Singleton.squares[target].unitOn != null)
-                Gameplay.Singleton.squares[target].unitOn.TakeDamage(5);
+                Gameplay.Singleton.squares[target].unitOn.TakeDamage(5, DamageType.fire);
         })},
         { global::Spells.T_Fireball, new SpellTarget(Runes.igni, Runes.igni, Cast:(bool player, int target) =>
         {
             Gameplay.Singleton.SpawnParticle("FireBlow", target);
             if(Gameplay.Singleton.squares[target].unitOn != null)
-                Gameplay.Singleton.squares[target].unitOn.TakeDamage(15);
+                Gameplay.Singleton.squares[target].unitOn.TakeDamage(15, DamageType.fire);
         })},
         { global::Spells.T_FireSplash, new SpellTarget(Runes.igni, Runes.igni, Runes.igni, Cast:(bool player, int target) =>
         {
@@ -130,7 +130,7 @@ public class Spell
             {
                 Gameplay.Singleton.SpawnParticle("FireBlow", target + i);
                 if(Gameplay.Singleton.squares[target + i].unitOn != null)
-                    Gameplay.Singleton.squares[target + i].unitOn.TakeDamage(15);
+                    Gameplay.Singleton.squares[target + i].unitOn.TakeDamage(15, DamageType.fire);
             }
         })},
         #endregion

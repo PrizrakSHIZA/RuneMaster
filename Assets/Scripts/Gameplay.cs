@@ -77,7 +77,7 @@ public class Gameplay : MonoBehaviour
         if (player)
         {
             if (squares[0].unitOn != null)
-                squares[0].unitOn.TakeDamage(999);
+                squares[0].unitOn.TakeDamage(999, DamageType.physical);
             temp.GetComponent<RectTransform>().anchoredPosition = squares[0].anchoredPosition;
             unitControler.currentSquare = 0;
             playerUnits.Add(unitControler);
@@ -85,7 +85,7 @@ public class Gameplay : MonoBehaviour
         else
         {
             if (squares[squares.Count - 1].unitOn != null)
-                squares[squares.Count - 1].unitOn.TakeDamage(999);
+                squares[squares.Count - 1].unitOn.TakeDamage(999, DamageType.physical);
             temp.GetComponent<RectTransform>().anchoredPosition = squares[squares.Count - 1].anchoredPosition;
             unitControler.currentSquare = squares.Count - 1;
             enemyUnits.Add(unitControler);
