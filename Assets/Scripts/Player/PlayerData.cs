@@ -28,7 +28,7 @@ public class PlayerData
         unlockedRunes.Remove(Runes.NumberOf);
         #endregion
         maxHP = 20;
-        maxMana = 20;
-        manaRegen = 3;
+        maxMana = 15;
+        manaRegen = 2;
     }
 }

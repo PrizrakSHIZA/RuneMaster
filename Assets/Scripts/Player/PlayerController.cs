@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         currentSpell.CollectionChanged += SpellChanged;
     }
 
-    void SpellChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    public void SpellChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         manaUsage.fillAmount = 0;
         foreach (Runes rune in currentSpell)
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
         if (hp <= 0)
         {
             hp = 0;
-            //GameOver
+            Gameplay.Singleton.Lose();
         }
         Debug.Log($"Now hp is {hp}");
     }

@@ -37,6 +37,9 @@ public class UnitController : MonoBehaviour
         //Check for unit on the way
         for (int i = 1; i <= stats.speed; i++)
         {
+            if (currentSquare + i * Owner >= Gameplay.Singleton.squares.Count || currentSquare + i * Owner < 0)
+                return;
+
             UnitController unit = Gameplay.Singleton.squares[currentSquare + i * Owner].unitOn;
             if (unit != null)
             {
@@ -64,7 +67,7 @@ public class UnitController : MonoBehaviour
     void PerformMove(int moveTo, bool attack = false)
     {
         Gameplay.Singleton.squares[currentSquare].unitOn = null;
-        if (moveTo >= Gameplay.Singleton.squares.Count && Owner == 1)
+        if (moveTo >= Gameplay.Singleton.squares.Count && playerControl)
         {
             moveTo = Gameplay.Singleton.squares.Count - 2;
             attack = true;
@@ -180,7 +183,8 @@ public class UnitController : MonoBehaviour
         transform.DOShakePosition(1f, 3);
         GetComponent<Image>().DOColor(Color.red, 0.5f).OnComplete(() =>
         {
-            GetComponent<Image>().DOColor(Color.white, 0.5f);
+            if(currentHP != 0)
+                GetComponent<Image>().DOColor(Color.white, 0.5f);
         });
     }
 }

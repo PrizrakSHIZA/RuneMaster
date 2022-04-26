@@ -12,4 +12,5 @@ public class AI_SO : ScriptableObject
 
     public int HP;
     public int mana;
+    public int manaRegen;
 }
