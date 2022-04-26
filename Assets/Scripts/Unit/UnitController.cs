@@ -105,7 +105,7 @@ public class UnitController : MonoBehaviour
             else
             {
                 //Attack enemy unit
-                Gameplay.Singleton.squares[currentSquare + 1].unitOn.TakeDamage(stats.damage);
+                Gameplay.Singleton.squares[currentSquare + 1].unitOn.TakeDamage(stats.damage, stats.attackType);
                 AttackAnimation();
             }
         }
@@ -120,14 +120,15 @@ public class UnitController : MonoBehaviour
             else
             {
                 //Attack player unit
-                Gameplay.Singleton.squares[currentSquare - 1].unitOn.TakeDamage(stats.damage);
+                Gameplay.Singleton.squares[currentSquare - 1].unitOn.TakeDamage(stats.damage, stats.attackType);
                 AttackAnimation();
             }
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, DamageType attackType)
     {
+        damage = Mathf.RoundToInt(damage * Unit.GetDamageModifier(attackType, stats.armorType));
         inAction++;
         currentHP = Mathf.Clamp(currentHP - damage, 0, stats.hp);
         Debug.Log($"Under attack! {currentHP}");
@@ -153,11 +154,6 @@ public class UnitController : MonoBehaviour
             return true;
         else 
             return false;
-    }
-
-    public void GetDamageModifier()
-    {
-
     }
 
     void AttackAnimation()
