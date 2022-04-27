@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515b5cbfd3060b4409d0b67f45b69a85, type: 3}
   m_Name: TestAI
   m_EditorClassIdentifier: 
-  spellList: 0000000001000000030000000e0000000f0000000d00000004000000050000000600000002000000
+  spellList: 
   smartChance: 0
   HP: 20
   mana: 15

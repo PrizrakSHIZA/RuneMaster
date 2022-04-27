@@ -37,25 +37,16 @@ public class UnitController : MonoBehaviour
         //Check for unit on the way
         for (int i = 1; i <= stats.speed; i++)
         {
-            if (currentSquare + i * Owner >= Gameplay.Singleton.squares.Count || currentSquare + i * Owner < 0)
-                return;
+            if (currentSquare + i * Owner >= Gameplay.Singleton.squares.Count-1 || currentSquare + i * Owner < 0)
+                break;
 
             UnitController unit = Gameplay.Singleton.squares[currentSquare + i * Owner].unitOn;
             if (unit != null)
             {
                 //check if ally
-                if (unit.IsAlly(this))
-                {
-                    int moveTo = unit.currentSquare - 1 * Owner;
-                    PerformMove(moveTo);
-                    return;
-                }
-                else
-                {
-                    int moveTo = unit.currentSquare - 1 * Owner;
-                    PerformMove(moveTo, true);
-                    return;
-                }
+                int moveTo = unit.currentSquare - 1 * Owner;
+                PerformMove(moveTo, !unit.IsAlly(this));
+                return;
             }
         }
 
@@ -67,7 +58,7 @@ public class UnitController : MonoBehaviour
     void PerformMove(int moveTo, bool attack = false)
     {
         Gameplay.Singleton.squares[currentSquare].unitOn = null;
-        if (moveTo >= Gameplay.Singleton.squares.Count && playerControl)
+        if (moveTo >= Gameplay.Singleton.squares.Count-1 && playerControl)
         {
             moveTo = Gameplay.Singleton.squares.Count - 2;
             attack = true;
