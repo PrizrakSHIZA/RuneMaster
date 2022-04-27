@@ -139,6 +139,8 @@ public class PlayerController : MonoBehaviour
     public void RegenMana()
     {
         mana += data.manaRegen;
+        if (mana > data.maxMana)
+            mana = data.maxMana;
         UpdateManaUI();
     }
     

@@ -96,6 +96,8 @@ public class AIController : MonoBehaviour
     public void RegenMana()
     {
         mana += AI.manaRegen;
+        if (mana > AI.mana)
+            mana = AI.mana;
     }
 
     private bool EnoughtMana(Spell currentSpell)
