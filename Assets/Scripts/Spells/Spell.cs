@@ -22,91 +22,91 @@ public class Spell
         //Demons
         { global::Spells.S_DemonGreat, new SpellSummon(Runes.magnus, Runes.igni, Cast: (bool player) =>
         {
-            Unit unit = new Unit(9, 6, 1, Resources.Load<Sprite>("Units/Demon_02"));
+            Unit unit = new Unit(9, 6, 1, sprite: Resources.Load<Sprite>("Units/Demon_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_DemonFast, new SpellSummon(Runes.celer, Runes.igni, Cast: (bool player) =>
         {
-            Unit unit = new Unit(8, 3, 3, Resources.Load<Sprite>("Units/Demon_01"));
+            Unit unit = new Unit(8, 3, 2, 3, sprite: Resources.Load<Sprite>("Units/Demon_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
         //Darkness
         { global::Spells.S_DarkGreat, new SpellSummon(Runes.magnus, Runes.yami, Cast: (bool player) =>
         {
-            Unit unit = new Unit(12, 7, 1, Resources.Load<Sprite>("Units/Dark_01"));
+            Unit unit = new Unit(12, 7, 1, sprite: Resources.Load<Sprite>("Units/Dark_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_DarkFast, new SpellSummon(Runes.celer, Runes.yami, Cast: (bool player) =>
         {
-            Unit unit = new Unit(10, 5, 3, Resources.Load<Sprite>("Units/Dark_02"));
+            Unit unit = new Unit(10, 5, 3, sprite: Resources.Load<Sprite>("Units/Dark_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
         //Dirt
         { global::Spells.S_Dirt, new SpellSummon(Runes.lutum, Cast: (bool player) =>
         {
-            Unit unit = new Unit(3, 2, 1, Resources.Load<Sprite>("Units/Dirt_01"));
+            Unit unit = new Unit(3, 2, 1, sprite: Resources.Load<Sprite>("Units/Dirt_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_DirtFast, new SpellSummon(Runes.celer, Runes.lutum, Cast: (bool player) =>
         {
-            Unit unit = new Unit(5, 3, 2, Resources.Load<Sprite>("Units/Dirt_02"));
+            Unit unit = new Unit(5, 3, 2, sprite: Resources.Load<Sprite>("Units/Dirt_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_DirtGreat, new SpellSummon(Runes.magnus, Runes.lutum, Cast: (bool player) =>
         {
-            Unit unit = new Unit(6, 6, 1, Resources.Load<Sprite>("Units/Dirt_03"));
+            Unit unit = new Unit(6, 6, 1, sprite: Resources.Load<Sprite>("Units/Dirt_03"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
         //Plants
         { global::Spells.S_Plant, new SpellSummon(Runes.kojo, Cast: (bool player) =>
         {
-            Unit unit = new Unit(2, 5, 1, Resources.Load<Sprite>("Units/Plants_01"));
+            Unit unit = new Unit(2, 5, 1, sprite: Resources.Load<Sprite>("Units/Plants_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_PlantFast, new SpellSummon(Runes.celer, Runes.kojo, Cast: (bool player) =>
         {
-            Unit unit = new Unit(3, 7, 2, Resources.Load<Sprite>("Units/Plants_02"));
+            Unit unit = new Unit(3, 7, 2, sprite: Resources.Load<Sprite>("Units/Plants_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_PlantGreat, new SpellSummon(Runes.magnus, Runes.kojo, Cast: (bool player) =>
         {
-            Unit unit = new Unit(4, 8, 2, Resources.Load<Sprite>("Units/Plants_03"));
+            Unit unit = new Unit(4, 8, 2, sprite: Resources.Load<Sprite>("Units/Plants_03"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
         //Humans
         { global::Spells.S_Human, new SpellSummon(Runes.hito, Cast: (bool player) =>
         {
-            Unit unit = new Unit(4, 2, 2, Resources.Load<Sprite>("Units/Human_01"));
+            Unit unit = new Unit(4, 2, 2, sprite: Resources.Load<Sprite>("Units/Human_01"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_HumanFast, new SpellSummon(Runes.celer, Runes.hito, Cast: (bool player) =>
         {
-            Unit unit = new Unit(6, 3, 3, Resources.Load<Sprite>("Units/Human_02"));
+            Unit unit = new Unit(6, 3, 3, sprite: Resources.Load<Sprite>("Units/Human_02"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},
 
         { global::Spells.S_HumanGreat, new SpellSummon(Runes.magnus, Runes.hito, Cast: (bool player) =>
         {
-            Unit unit = new Unit(8, 4, 2, Resources.Load<Sprite>("Units/Human_03"));
+            Unit unit = new Unit(8, 4, 2, sprite: Resources.Load<Sprite>("Units/Human_03"));
 
             Gameplay.Singleton.Summon(unit, player);
         })},

@@ -8,16 +8,18 @@ public class Unit
     public int hp { get; }
     public int damage { get; }
     public int speed { get; }
+    public int range { get; }
     public Sprite sprite { get; }
     public DamageType attackType { get; }
     public DamageType armorType { get; }
 
-    public Unit(int hp = 10, int damage = 1, int speed = 1, Sprite sprite = null, DamageType attackType = DamageType.physical, DamageType armorType = DamageType.physical)
+    public Unit(int hp = 10, int damage = 1, int speed = 1, int range = 1, Sprite sprite = null, DamageType attackType = DamageType.physical, DamageType armorType = DamageType.physical)
     {
         this.hp = hp;
         this.damage = damage;
         this.speed = speed;
         this.sprite = sprite;
+        this.range = range;
         this.attackType = attackType;
         this.armorType = armorType;
     }
